@@ -49,7 +49,21 @@ if ($action == 'list_products') {
         include('../errors/error.php');
     } else { 
         add_product($category_id, $code, $name, $price);
-        header("Location: .?category_id=$category_id");
+        header("Location: .?category_id=$category_id");    
     }
-}    
+} else if ($action == 'list_category') {
+    $category_id = filter_input(INPUT_GET, 'category_id',
+    FILTER_VALIDATE_INT);
+    include('product_manager/category_list.php')
+    }    
+} else if ($action =='delete_category') {
+    $category_id = filter_input(INPUT_POST, 'category_id',
+    FILTER_VALIDATE_INT);
+        if (category_id == NULL || category_id == FALSE) {
+            $error = "Missing or incorrect category id.";
+            include('errors/error.php');
+}   else {
+    delete_category($category_id);
+    header("Location: .?category_id=$category_id");
+}
 ?>
